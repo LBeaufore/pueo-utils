@@ -1,0 +1,1 @@
+from pysoceeprom.pysoceeprom import PySOCEEPROM
