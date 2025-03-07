@@ -90,13 +90,15 @@ class HskPacket:
 # ...
 # i am not smart
 class HskSerial(Serial):
-    def __init__(self, path):
+    def __init__(self, path, baudrate=500000):
         super().__init__(path, baudrate=500000, timeout=5)
 
     def send(self, pkt):
         if not isinstance(pkt, HskPacket):
             raise TypeError("pkt must be of type HskPacket")
         self.write(pkt.encode()+b'\x00')
+        self.flush()
+        return pkt.encode()+b'\x00'
 
     def receive(self):
         crx = self.read_until(expected=b'\x00').strip(b'\x00')
